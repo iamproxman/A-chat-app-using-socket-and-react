@@ -9,7 +9,7 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:5173",
-      "https://real-time-chat-app-with-video-call-using.onrender.com"
+      // "https://real-time-chat-app-with-video-call-using.onrender.com"
     ],
   },
 });
@@ -18,6 +18,7 @@ const io = new Server(server, {
 const userSocketMap = {};
 
 export function getReceiverSocketId(userId) {
+  // console.log("socket infos for debugs: ", userId, userSocketMap)
   return userSocketMap[userId] || null;
 }
 

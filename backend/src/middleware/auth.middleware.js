@@ -29,6 +29,7 @@ export const protectedRoute = async (req,res,next) => {
     if(!user) return res.status(401).send("user not found");
 
     req.user = user;
+    // console.log("user legit \n")
 
     next();
     } catch (error) {

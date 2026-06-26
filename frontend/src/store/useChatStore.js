@@ -17,7 +17,7 @@ export const useChatStore = create((set, get) => ({
       const res = await axiosInstance.get("/message/users");
       set({ users: res.data });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || error.message || "Failed to fetch users");
     } finally {
       set({ isUsersLoading: false });
     }
@@ -30,7 +30,7 @@ export const useChatStore = create((set, get) => ({
       const res = await axiosInstance.get(`/message/${userId}`);
       set({ messages: res.data });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || error.message || "Failed to fetch messages");
     } finally {
       set({ isMessagesLoading: false });
     }
@@ -44,7 +44,7 @@ export const useChatStore = create((set, get) => ({
       set({ messages: [...messages, res.data] });
     } catch (error) {
       console.log(error)
-      toast.error(error);
+      toast.error(error.response?.data?.message || error.message || "Failed to send message");
     }
   },
 

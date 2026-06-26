@@ -91,7 +91,10 @@ export const useAuthStore = create((set, get) => ({
     const { authUser, BASE_URL } = get();                           //BaseUrl=localhost:3000
     if (!authUser || get().socket?.connected) return;
 
-    const socket = io(BASE_URL, {         
+    // Use root url for socket connections to avoid joining '/api' namespace
+    const socketUrl = BASE_URL.endsWith("/api") ? BASE_URL.slice(0, -4) : BASE_URL;
+
+    const socket = io(socketUrl, {         
       query: { userId: authUser._id },
     });
 

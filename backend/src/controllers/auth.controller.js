@@ -7,16 +7,16 @@ export const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
   try {
     if (!fullName || !password || !email) {
-      res.status(404).send("provide mandatoory details");
+      return res.status(404).send("provide mandatoory details");
     }
     if (password.length < 6) {
-      res.status(404).send("Password length is < 6");
+      return res.status(404).send("Password length is < 6");
     }
 
     const user = await User.findOne({ email });
 
     if (user) {
-      res.status(403).send("user already exist");
+      return res.status(403).send("user already exist");
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -102,7 +102,7 @@ export const updateProfile = async (req,res) => {
         // console.log(profilePic)      //working absotutely fine
         const userId = req.user._id;
 
-        if(!profilePic) res.status(400).send("enter profile pic");
+        if(!profilePic) return res.status(400).send("enter profile pic");
 
         const uploadResponce = await cloudinary.uploader.upload(profilePic);
         const updatedUser = await User.findByIdAndUpdate(userId,{profile_pic:uploadResponce.secure_url},{new:true});

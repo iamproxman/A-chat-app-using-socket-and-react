@@ -1,0 +1,25 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      # Since you kept the .dev name, we specify it here! 
+      # (Though usually, we rename it to just "Dockerfile")
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    # This automatically grabs your local .env file and passes the 
+    # MONGODB_URI, JWT_SECRET, Cloudinary keys etc. into the container!
+    env_file:
+      - ./backend/.env
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    # Wait, the frontend needs to talk to the backend container! 
+    # How does it know where the backend is in production? 
